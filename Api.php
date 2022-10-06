@@ -3,9 +3,9 @@
 	
 	//database constants
 	define('DB_HOST', 'localhost');
-	define('DB_USER', 'root');
-	define('DB_PASS', '');
-	define('DB_NAME', 'db_service');
+	define('DB_USER', 'id19645168_root');
+	define('DB_PASS', 'Jonath@n2211');
+	define('DB_NAME', 'id19645168_bd_inventario');
 	
 	//connecting to database and getting the connection object
 	$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
@@ -20,7 +20,7 @@
 	//$conn=conexion();  
 	
 	//creating a query
-	$stmt = $conn->prepare("SELECT codigo, descripcion, precio, imagen FROM tb_articulos;");
+	$stmt = $conn->prepare("SELECT codigo, descripcion, precio,  FROM tb_articulos;");
 	
 	//executing the query 
 	$stmt->execute();
@@ -36,7 +36,6 @@
 		$temp['codigo'] = $codigo; 
 		$temp['descripcion'] = $descripcion; 
 		$temp['precio'] = $precio; 
-		$temp['imagen'] = $imagen;
 		array_push($products, $temp);
 		
 			$datos[] = array_map("utf8_encode", $temp);
