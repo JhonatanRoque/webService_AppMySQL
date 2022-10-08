@@ -10,7 +10,7 @@ class Categoria {
           $comando = $link->prepare($query);
           $comando->execute(array($idCat, $nomCategoria, $estadoCategoria));
           $count = $comando->rowCount();
-        
+         //echo $count;
           if($count > 0){
               return 1;
           }else{
