@@ -5,7 +5,7 @@ include('categoria.php');
 //$idCategoria = $_POST['id_categoria'];
 $idCategoria = 57;
 
-if (($idCategoria!="") {
+if ($idCategoria!="") {
 
     $resultado = Mantenimiento::eliminar_Categoria($idCategoria);
 
