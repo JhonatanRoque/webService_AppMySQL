@@ -7,7 +7,7 @@ $idCategoria = 57;
 
 if ($idCategoria!="") {
 
-    $resultado = Mantenimiento::eliminar_Categoria($idCategoria);
+    $resultado = Categoria::eliminar_Categoria($idCategoria);
 
     if($resultado == 1) {
         header('Content-type: application/json; charset=utf-8');
