@@ -39,9 +39,38 @@ class Categoria {
             return -1;
         }                        
     }
+
+    public static function obtenerCategorias() {
+        include("connection_db.php");
+        
+        $query = "SELECT * FROM tb_categoria";
+
+        try {
+            $link=conexion();    
+            $comando = $link->prepare($query);
+            // Ejecutar sentencia preparada
+            $comando->execute();
+            
+            $rows_array = array();
+            while($result = $comando->fetch(PDO::FETCH_ASSOC))
+                {
+                                       
+                     $array [] = array('idCategoria' => $result['id_cat'], 'nombreCategoria' => $result['nom_categoria'], 'estadoCategoria' => $result['estado_categoria']);
+                    
+                }
+                
+                //array_map("utf8_encode", $array);
+  	            header('Content-type: application/json; charset=utf-8');
+  	            return print_r(json_encode($array), JSON_UNESCAPED_UNICODE);
+  	           
+        } catch (PDOException $e) {
+            return false;
+        }
+        
+    }
     
     //by Tec. Francisco Abarca 
     //Modificado por: Tec. Francisco Abarca
-    //Fecha modificación: 07/10/2022 07:40 pm
+    //Fecha modificación: 08/10/2022 11:30 am
 }
 ?>

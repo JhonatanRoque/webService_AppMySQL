@@ -2,8 +2,8 @@
 
 include('categoria.php'); 
 
-//$idCategoria = $_POST['id_categoria'];
-$idCategoria = 57;
+$idCategoria = $_POST['id_categoria'];
+//$idCategoria = 57;
 
 if ($idCategoria!="") {
 
