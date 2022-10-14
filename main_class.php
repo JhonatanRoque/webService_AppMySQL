@@ -1,15 +1,14 @@
 <?php
-  //require_once("connection_db.php");
-class Mantenimiento{
+class MantenimientoProductos{
     
-    public static function guardar_Articulos($codigo, $descripcion, $precio){
+    public static function guardar_Productos($id, $nombre, $descripcion, $stock, $precio, $unidadM, $estado, $categoriaID){
         include("connection_db.php");
-        $query = "INSERT INTO  tb_articulos (codigo, descripcion, precio)
-                                VALUES (?, ?, ?)";
+        $query = "INSERT INTO  tb_producto (id_producto, nom_producto, des_producto, stock, precio, unidad_de_medida, estado_producto, categoria)
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try{    
           $link=conexion();    
           $comando = $link->prepare($query);
-          $comando->execute(array($codigo, $descripcion, $precio));
+          $comando->execute(array($id, $nombre, $descripcion, $stock, $precio, $unidadM, $estado, $categoriaID));
           $count = $comando->rowCount();
         
           if($count > 0){
