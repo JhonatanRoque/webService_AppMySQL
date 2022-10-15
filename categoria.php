@@ -68,9 +68,30 @@ class Categoria {
         }
         
     }
+
+    //Método para modificar categoria
+    public static function modificarCategoria($idCat, $nomCategoria, $estadoCategoria){
+        include("connection_db.php");
+        $query = "UPDATE  tb_categoria
+                                SET nom_categoria = ?, estado_categoria = ? WHERE id_cat = ?";
+        try{    
+          $link=conexion();    
+          $comando = $link->prepare($query);
+          $comando->execute(array($nomCategoria, $estadoCategoria, $idCat));
+          $count = $comando->rowCount();
+         //echo $count;
+          if($count > 0){
+              return 1;
+          }else{
+              return 0;
+          }
+        } catch (PDOException $e) {
+            return -1;
+        }                        
+    }
     
     //by Tec. Francisco Abarca 
     //Modificado por: Tec. Francisco Abarca
-    //Fecha modificación: 08/10/2022 11:30 am
+    //Fecha modificación: 14/10/2022 08:20 pm
 }
 ?>
