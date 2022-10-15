@@ -87,11 +87,41 @@ class Categoria {
           }
         } catch (PDOException $e) {
             return -1;
-        }                        
+        }     
+                        
+    }
+
+    //Método para ver productos asociados a una categoria
+    public static function getProductsToCategoria ($idCat){
+        include ("connection_db.php");
+        $query = "SELECT id_producto, nom_producto, stock, precio, estado_producto
+        FROM tb_producto WHERE categoria = ?";
+        try {
+            $link=conexion();    
+            $comando = $link->prepare($query);
+            // Ejecutar sentencia preparada
+            $comando->execute(array($idCat));
+            
+            $rows_array = array();
+            $i = 0;
+            while($result = $comando->fetch(PDO::FETCH_ASSOC))
+                {
+                                       
+                     $array [] = array('idProducto' => $result['id_producto'], 'nombreProducto' => $result['nom_producto'], 'Stock' => $result['stock'], 'precio' => $result['precio'], 'estado' => $result['estado_producto']);
+                    
+                }
+                
+                //array_map("utf8_encode", $array);
+  	            header('Content-type: application/json; charset=utf-8');
+  	            return print_r(json_encode($array), JSON_UNESCAPED_UNICODE);
+  	           
+        } catch (PDOException $e) {
+            return false;
+        } 
     }
     
     //by Tec. Francisco Abarca 
     //Modificado por: Tec. Francisco Abarca
-    //Fecha modificación: 14/10/2022 08:20 pm
+    //Fecha modificación: 15/10/2022 12:45 pm
 }
 ?>
