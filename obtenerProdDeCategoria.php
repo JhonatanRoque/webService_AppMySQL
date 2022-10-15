@@ -1,7 +1,6 @@
 <?php
 include("categoria.php");
-//$idCategoria = $_POST['id_categoria'];
-$idCategoria = 14;
+$idCategoria = $_POST['id_categoria'];
 
 if($idCategoria != ""){
     $resultado = Categoria::getProductsToCategoria($idCategoria);
