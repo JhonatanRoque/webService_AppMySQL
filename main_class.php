@@ -24,9 +24,9 @@ class MantenimientoProductos{
     
     
     
-    public static function eliminar_Articulos($codigo){
+    public static function eliminar_Producto($codigo){
       include("connection_db.php");
-      $query = "delete from tb_articulos where codigo=?";
+      $query = "DELETE from tb_producto WHERE id_producto = ?";
       try{
           $link=conexion();
           $comando=$link->prepare($query);
