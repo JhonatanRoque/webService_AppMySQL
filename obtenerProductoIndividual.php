@@ -1,10 +1,10 @@
 <?php
 include("main_class.php");
 $id = $_POST['codigo'];
-$id = 16272;
+//$id = 16272;
 
 if($id != ""){
-    $resultado = MantenimientoProductos::obtenerProductosIndividual();
+    $resultado = MantenimientoProductos::obtenerProductosIndividual($id);
     if ($resultado) {
         echo $resultado;
     } else {
