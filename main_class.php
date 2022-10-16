@@ -46,30 +46,34 @@ class MantenimientoProductos{
   
   
   
-  public static function actualizar_Articulos($codigo, $descripcion, $precio){
-        include("connection_db.php");
-        $query = "UPDATE tb_articulos" .
-            " SET descripcion=?, precio=? " .
-            "WHERE codigo=?";
+  public static function obtenerProductos() {
+    include("connection_db.php");
+    
+    $query = "SELECT * FROM tb_producto";
 
-        try {    
-          $link=conexion();    
-          $comando = $link->prepare($query);
-          $comando->execute(array($descripcion, $precio, $codigo));
-          //return $comando;
-          $count = $comando->rowCount(); 
-          if($count>0){
-              return 1;
-          }else{
-              return 0;   
-          }
-
-        } catch (PDOException $e) {
-            // Aqui puedes clasificar el error dependiendo de la excepcion
-            // para presentarlo en la respuesta Json
-            return -1;
-        }
+    try {
+        $link=conexion();    
+        $comando = $link->prepare($query);
+        // Ejecutar sentencia preparada
+        $comando->execute();
+        
+        $rows_array = array();
+        while($result = $comando->fetch(PDO::FETCH_ASSOC))
+            {
+                                   
+                 $array [] = array('id' => $result['id_producto'], 'nombreProducto' => $result['nom_producto'], 'descripcion' => $result['des_producto'], 'stock' => $result['stock'], 'precio' => $result['precio'], 'UnidadMedida' => $result['unidad_de_medida'], 'estado' => $result['estado_producto'], 'categoria' => $result['categoria'], 'fecha' => $result['fecha_entrada']);
+                
+            }
+            
+            //array_map("utf8_encode", $array);
+              header('Content-type: application/json; charset=utf-8');
+              return print_r(json_encode($array), JSON_UNESCAPED_UNICODE);
+             
+    } catch (PDOException $e) {
+        return false;
     }
+    
+}
     
     
     
