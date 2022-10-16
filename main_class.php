@@ -74,7 +74,58 @@ class MantenimientoProductos{
     }
     
 }
+
+public static function obtenerProductosIndividual($id) {
+    include("connection_db.php");
     
+    $query = "SELECT * FROM tb_producto WHERE id_producto = ?";
+
+    try {
+        $link=conexion();    
+        $comando = $link->prepare($query);
+        // Ejecutar sentencia preparada
+        $comando->execute(array($id));
+        
+        $rows_array = array();
+        while($result = $comando->fetch(PDO::FETCH_ASSOC))
+            {
+                                   
+                 $array [] = array('id' => $result['id_producto'], 'nombreProducto' => $result['nom_producto'], 'descripcion' => $result['des_producto'], 'stock' => $result['stock'], 'precio' => $result['precio'], 'UnidadMedida' => $result['unidad_de_medida'], 'estado' => $result['estado_producto'], 'categoria' => $result['categoria'], 'fecha' => $result['fecha_entrada']);
+                
+            }
+            
+            //array_map("utf8_encode", $array);
+              header('Content-type: application/json; charset=utf-8');
+              return print_r(json_encode($array), JSON_UNESCAPED_UNICODE);
+             
+    } catch (PDOException $e) {
+        return false;
+    }
+    
+}
+    
+//Metodo para modificar producto
+public static function modificar_Productos($id, $nombre, $descripcion, $stock, $precio, $unidadM, $estado, $categoriaID){
+    include("connection_db.php");
+    $query = "UPDATE  tb_producto 
+    SET nom_producto = ?, des_producto = ?, stock = ?, precio = ?, 
+    unidad_de_medida = ?, estado_producto = ?, categoria = ? 
+    WHERE id_producto = ?";
+    try{    
+      $link=conexion();    
+      $comando = $link->prepare($query);
+      $comando->execute(array($nombre, $descripcion, $stock, $precio, $unidadM, $estado, $categoriaID, $id));
+      $count = $comando->rowCount();
+    
+      if($count > 0){
+          return 1;
+      }else{
+          return 0;
+      }
+    } catch (PDOException $e) {
+        return -1;
+    }                        
+}
     
     
     
