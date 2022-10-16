@@ -161,6 +161,6 @@ class MantenimientoProductos{
   
       //by Prof. Gamez.
       //Modificado por: Tec. Francisco Abarca
-      //Fecha modificación: 06/10/2022 03:28 pm
+      //Fecha modificación: 15/10/2022 08:40 pm
 }
 ?>
