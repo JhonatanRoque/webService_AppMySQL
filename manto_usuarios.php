@@ -17,7 +17,7 @@
           if( $filasAfectadas > 0){
             return $row;
           }
-          $mensaje = "No existe ningun usuario con dichas credenciales";
+          $mensaje = array("mensaje" =>"Usuario o contraseña incorrectos, puede que no exista un usuario con dicas credenciales");
           return $mensaje;
 
         } catch (PDOException $e) {
@@ -40,7 +40,7 @@
               if( $filasAfectadas > 0){
                 return $row;
               }
-              $mensaje = $comando->queryString;
+              $mensaje = array("mensaje" =>"Usuario o contraseña incorrectos, puede que no exista un usuario con dicas credenciales");
               return $mensaje;
     
             } catch (PDOException $e) {
