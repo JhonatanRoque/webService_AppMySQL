@@ -2,15 +2,15 @@
     include("manto_usuarios.php");
 
     //Recibir variables;
-    $nombres = "Makima";
-    $apellidos = "Shoto";
-    $correo = "makigod@gmail.com";
-    $usuario = "makigod";
-    $clave = "prueba1";
-    $tipo = 1;
-    $estado = 1;
-    $pregunta = "¿IDE prefereido?";
-    $respuesta = "vim";
+    $nombres = htmlspecialchars($_POST["nombres"],ENT_QUOTES);
+    $apellidos = htmlspecialchars($_POST["apellidos"],ENT_QUOTES);
+    $correo = htmlspecialchars($_POST["correo"],ENT_QUOTES);
+    $usuario = htmlspecialchars($_POST["usuario"],ENT_QUOTES);
+    $clave = htmlspecialchars($_POST["contrasena"],ENT_QUOTES);
+    $tipo = $_POST['tipo'];
+    $estado = $_POST['estado'];
+    $pregunta = htmlspecialchars($_POST["pregunta"],ENT_QUOTES);
+    $respuesta = htmlspecialchars($_POST["respuesta"],ENT_QUOTES);
 
     if(($nombres != "") and ($apellidos != "") and ($correo != "") and 
         ($usuario != "") and ($clave != "") and ($tipo != "") and
