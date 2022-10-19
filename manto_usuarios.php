@@ -123,11 +123,55 @@
             return $e;
         }
     }
-        
+        //Método para obtener la pregunta
+        public static function getPregunta($usuario){
+            include ("connection_db.php");
+            $query = "SELECT pregunta FROM tb_usuario WHERE usuario = ?";
+            try{
+                $link = conexion();
+                $comando = $link->prepare($query);
+                $comando->execute(array($usuario));
+                $row = $comando->fetch(PDO::FETCH_ASSOC);
+                $filasAfectadas = $comando->rowCount();
+                if( $filasAfectadas > 0){
+                    return $row;
+                }else{
+                    //No encontro ninguna pregunta asociada a ese usuario
+                    return 0;
+                }
+            }catch(PDOException $e){
+                return $e;
+            }
+        }
+        //Metodo para verificar la respuesta 
+        public static function checkRespuesta($correo, $pregunta, $respuesta){
+            include ("connection_db.php");
+            $query = "SELECT respuesta, usuario FROM tb_usuario WHERE correo = ? AND pregunta = ?";
+            try{
+                $link = conexion();
+                $comando = $link->prepare($query);
+                $comando->execute(array($correo, $pregunta));
+                $row = $comando->fetch(PDO::FETCH_ASSOC);
+                $filasAfectadas = $comando->rowCount();
+                if( $filasAfectadas > 0){ //Sabemos que encontro una respuesta a la pregunta y al usuario
+                    if($respuesta == $row['respuesta']){ //Corroboramos que nuestra respuesta sea igual a la respuesta del servidor
+                        return $row['usuario']; //Si lo es, devolvemos el usuario
+                    }else{
+                        return -1;
+                    }
+                }else{
+                    //No encontro ninguna respuesta
+                    return 0;
+                }
+            }catch(PDOException $e){
+                return $e;
+            }
+        }
+
         
     }
     //by Tec. Francisco Abarca 
     //Modificado por: Tec. Francisco Abarca
-    //Fecha modificación: 18/10/2022 08:20 pm
+    //Fecha modificación: 19/10/2022 04:30 pm
 
 ?>
