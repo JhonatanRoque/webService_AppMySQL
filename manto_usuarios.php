@@ -3,7 +3,7 @@
     class usuarios{
         
     //Metodo para consultar si existe una cuenta con dicho usuario y contraseña
-    public static function getLogin($email, $clave){
+    public static function getLogin($usuario, $clave){
     include("connection_db.php");
     
     // Consulta de la tabla usuarios para verificar email existentes.
@@ -11,7 +11,7 @@
     try {    
           $link=conexion();    
           $comando = $link->prepare($query);
-          $comando->execute(array($email,$clave));
+          $comando->execute(array($usuario,$clave));
           $row = $comando->fetch(PDO::FETCH_ASSOC);
           $filasAfectadas = $comando->rowCount();
           if( $filasAfectadas > 0){
@@ -25,6 +25,29 @@
         }
         
     }
+
+    public static function getLoginCorreo($correo, $contrasena){
+        include("connection_db.php");
+        
+        // Consulta de la tabla usuarios para verificar email existentes.
+        $query = "SELECT * FROM tb_usuario WHERE correo = '$correo' and clave = ?";
+        try {    
+              $link=conexion();    
+              $comando = $link->prepare($query);
+              $comando->execute(array($contrasena));
+              $row = $comando->fetch(PDO::FETCH_ASSOC);
+              $filasAfectadas = $comando->rowCount();
+              if( $filasAfectadas > 0){
+                return $row;
+              }
+              $mensaje = $comando->queryString;
+              return $mensaje;
+    
+            } catch (PDOException $e) {
+                return -1;
+            }
+            
+        }
         
     //Metodo para registrar usuarios
     public static function setUser($nombres, $apellidos, $correo, $usuario, $clave, $tipo, $estado, $pregunta, $respuesta){
@@ -43,7 +66,7 @@
                 return $mensaje;
             }
             
-
+            $link = conexion();
             $comando = $link -> prepare ($query);
             $comando -> execute (array($nombres, $apellidos, $correo, $usuario, $clave, $tipo, $estado, $pregunta, $respuesta));
             $row = $comando -> rowCount();
