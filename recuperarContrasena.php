@@ -5,10 +5,10 @@ $pregunta = htmlspecialchars($_POST['pregunta'], ENT_QUOTES);
 $respuesta = htmlspecialchars($_POST['respuesta'], ENT_QUOTES);
 
 if($correo != ""){
-    $resultado = usuarios::checkRespuesta($correo, $pregunta, $respuesta);
+    $resultado = usuarios::recuperarContrasena($correo, $pregunta, $respuesta);
             
     header('Content-type: application/json; charset=utf-8');
-    $json_string = json_encode(array("usuario" => $resultado));
+    $json_string = json_encode(array("contrasena" => $resultado));
     echo $json_string;
 }
 
