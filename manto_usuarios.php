@@ -217,10 +217,29 @@
             }
         }
 
+         //Metodo para verificar la respuesta 
+         public static function eliminarCuenta($id){
+            include ("connection_db.php");
+            $query = "DELETE FROM tb_usuario WHERE id = ?";
+            try{
+                $link = conexion();
+                $comando = $link->prepare($query);
+                $comando->execute(array($id));
+                $filasAfectadas = $comando->rowCount();
+                if( $filasAfectadas > 0){ //Sabemos que elimino una cuenta
+                    return 1;
+                }else{
+                    //No encontro ninguna cuenta que eliminar 
+                    return 0;
+                }
+            }catch(PDOException $e){
+                return $e;
+            }
+        }
         
     }
     //by Tec. Francisco Abarca 
     //Modificado por: Tec. Francisco Abarca
-    //Fecha modificación: 19/10/2022 04:30 pm
+    //Fecha modificación: 20/10/2022 10:20 pm
 
 ?>
