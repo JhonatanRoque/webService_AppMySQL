@@ -26,6 +26,30 @@
         
     }
 
+    //Metodo para consultar si existe una cuenta con dicho usuario y contraseña
+    public static function getDatosIndividual($usuario){
+        include("connection_db.php");
+        
+        // Consulta de la tabla usuarios para verificar email existentes.
+        $query = "SELECT * FROM tb_usuario WHERE usuario = ? ";
+        try {    
+              $link=conexion();    
+              $comando = $link->prepare($query);
+              $comando->execute(array($usuario));
+              $row = $comando->fetch(PDO::FETCH_ASSOC);
+              $filasAfectadas = $comando->rowCount();
+              if( $filasAfectadas > 0){
+                return $row;
+              }
+              $mensaje = array("mensaje" =>"Usuario o contraseña incorrectos, puede que no exista un usuario con dicas credenciales");
+              return $mensaje;
+    
+            } catch (PDOException $e) {
+                return -1;
+            }
+            
+        }
+
     public static function getLoginCorreo($correo, $contrasena){
         include("connection_db.php");
         
